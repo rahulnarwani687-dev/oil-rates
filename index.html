@@ -35,7 +35,7 @@
       font-family: 'JetBrains Mono', monospace;
     }
     .pb-safe {
-      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6rem);
+      padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 6.2rem);
     }
     .pt-safe {
       padding-top: calc(env(safe-area-inset-top, 0px) + 0.75rem);
@@ -59,14 +59,14 @@
           <h1 class="text-base font-extrabold text-white tracking-tight leading-tight">Daily Oil Rates</h1>
           <p class="text-[11px] text-emerald-400 font-semibold flex items-center gap-1.5">
             <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            Zero Storage • Clean Session
+            Zero Storage • Clean Memory
           </p>
         </div>
       </div>
 
-      <!-- Quick Reset Button -->
-      <button onclick="resetDefaults()" title="Reset default items" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-400 hover:text-slate-200 text-xs font-semibold border border-slate-700/60 transition flex items-center gap-1 btn-press">
-        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
+      <!-- Reset Button -->
+      <button onclick="resetToLaxmiDepoDefaults()" title="Reset to default values" class="px-2.5 py-1.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 hover:text-white text-xs font-bold border border-slate-700 transition flex items-center gap-1 btn-press">
+        <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
         <span>Reset</span>
       </button>
     </div>
@@ -78,25 +78,22 @@
     <!-- Card 1: Business Details -->
     <div class="bg-slate-900 border border-slate-800/80 rounded-2xl p-4 shadow-xl space-y-3">
       <div class="flex items-center justify-between border-b border-slate-800/70 pb-2">
-        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Business Header</span>
-        <span class="text-[10px] bg-slate-800 text-slate-400 font-semibold px-2 py-0.5 rounded-md">Prints in Message</span>
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Business Details</span>
+        <span class="text-[10px] bg-slate-800 text-amber-400 font-semibold px-2 py-0.5 rounded-md">Defaults to Laxmi Oil Depo</span>
       </div>
 
       <div class="space-y-2.5">
         <div>
-          <label class="block text-xs font-medium text-slate-400 mb-1">Firm / Shop Name</label>
-          <input type="text" id="firm-name" value="Shree Ganesh Traders" placeholder="Your Business Name" oninput="updateLivePreview()" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-semibold text-white placeholder-slate-600 focus:outline-none focus:border-amber-400 transition">
+          <label class="block text-xs font-medium text-slate-400 mb-1">Firm / Shop Name & City</label>
+          <input type="text" id="firm-name" value="Laxmi Oil Depo, Bhavnagar city" placeholder="Shop name & City" oninput="updateLivePreview()" class="w-full px-3.5 py-2.5 bg-slate-950 border border-slate-800 rounded-xl text-sm font-semibold text-white placeholder-slate-600 focus:outline-none focus:border-amber-400 transition">
         </div>
 
-        <div class="grid grid-cols-2 gap-2.5">
-          <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1">Market / City</label>
-            <input type="text" id="firm-city" value="Rajkot" placeholder="e.g. Rajkot" oninput="updateLivePreview()" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-medium text-white placeholder-slate-600 focus:outline-none focus:border-amber-400 transition">
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-xs font-medium text-slate-400">Today's Date</label>
+            <span id="date-gujarati-badge" class="text-[11px] font-gujarati text-amber-300 font-bold"></span>
           </div>
-          <div>
-            <label class="block text-xs font-medium text-slate-400 mb-1">Date</label>
-            <input type="date" id="rate-date" onchange="updateLivePreview()" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-semibold font-num text-white focus:outline-none focus:border-amber-400 transition">
-          </div>
+          <input type="date" id="rate-date" onchange="onDateChanged()" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-xs font-semibold font-num text-white focus:outline-none focus:border-amber-400 transition">
         </div>
       </div>
     </div>
@@ -106,7 +103,7 @@
       <div class="flex items-center justify-between border-b border-slate-800/70 pb-2.5">
         <div>
           <h2 class="text-xs font-bold uppercase tracking-wider text-slate-300">Today's Oil Tin Rates</h2>
-          <p class="text-[11px] text-slate-500">Uncheck (✓) to exclude from WhatsApp</p>
+          <p class="text-[11px] text-slate-400">Check (✓) to include & enter rate</p>
         </div>
         <button onclick="openAddItemModal()" class="px-2.5 py-1.5 bg-amber-500 hover:bg-amber-400 text-slate-950 text-xs font-bold rounded-xl flex items-center gap-1 shadow-sm btn-press transition">
           <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 4v16m8-8H4"/></svg>
@@ -139,7 +136,7 @@
       <div class="pt-3 border-t border-slate-800/80">
         <div class="flex items-center justify-between mb-2">
           <span class="text-xs font-bold uppercase tracking-wider text-slate-400">Live Gujarati Message</span>
-          <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded">Auto Formatted</span>
+          <span class="text-[10px] text-emerald-400 font-semibold bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded">Auto Generated</span>
         </div>
         
         <!-- WhatsApp Chat Style Bubble -->
@@ -191,15 +188,15 @@
       <div class="space-y-3">
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1">Product Name (English)</label>
-          <input type="text" id="new-item-eng" placeholder="e.g. Castor Oil" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm font-semibold text-white focus:outline-none focus:border-amber-400">
+          <input type="text" id="new-item-eng" placeholder="e.g. Corn Oil 15kg" class="w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm font-semibold text-white focus:outline-none focus:border-amber-400">
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1">Gujarati Label for Message</label>
-          <input type="text" id="new-item-guj" placeholder="દા.ત. એરંડિયા તેલ (દિવેલ)" class="font-gujarati w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm font-semibold text-white focus:outline-none focus:border-amber-400">
+          <input type="text" id="new-item-guj" placeholder="દા.ત. મકાઈ તેલ (૧૫ કિલો ડબ્બો)" class="font-gujarati w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm font-semibold text-white focus:outline-none focus:border-amber-400">
         </div>
         <div>
           <label class="block text-xs font-semibold text-slate-400 mb-1">Price (₹)</label>
-          <input type="number" id="new-item-rate" placeholder="e.g. 2450" class="font-num w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm font-bold text-white focus:outline-none focus:border-amber-400">
+          <input type="number" id="new-item-rate" placeholder="e.g. 2150" class="font-num w-full px-3 py-2 bg-slate-950 border border-slate-800 rounded-xl text-sm font-bold text-white focus:outline-none focus:border-amber-400">
         </div>
       </div>
 
@@ -218,29 +215,64 @@
 
   <script>
     /**
-     * ZERO-STORAGE ARCHITECTURE:
-     * No localStorage, no sessionStorage, no indexedDB, no cookies.
-     * All items exist in transient JavaScript memory and clear automatically on reload.
+     * ZERO LOCAL STORAGE ARCHITECTURE:
+     * No localStorage, no sessionStorage, no database, no cookies.
+     * All states live strictly in memory and reset cleanly.
      */
+    const DEFAULT_SHOP_NAME = "Laxmi Oil Depo";
+
+    // Base oil catalog with ALL items deselected by default and blank rates
     const defaultProducts = [
-      { id: 'p1', eng: 'Groundnut Oil (Sing Tel 15kg)', guj: 'સીંગતેલ (૧૫ કિલો ડબ્બો)', rate: '2720', active: true },
-      { id: 'p2', eng: 'Cottonseed Oil (Kapasiya 15kg)', guj: 'કપાસિયા તેલ (૧૫ કિલો ડબ્બો)', rate: '2190', active: true },
-      { id: 'p3', eng: 'Mustard Oil (Sarson 15kg)', guj: 'સરસવ તેલ (૧૫ કિલો ડબ્બો)', rate: '2280', active: true },
-      { id: 'p4', eng: 'Sunflower Oil (15L Tin)', guj: 'સૂર્યમુખી તેલ (૧૫ લીટર)', rate: '2140', active: true },
-      { id: 'p5', eng: 'Soybean Oil (15kg Tin)', guj: 'સોયાબીન તેલ (૧૫ કિલો ડબ્બો)', rate: '1980', active: true },
-      { id: 'p6', eng: 'Palmolein Oil (15kg Tin)', guj: 'પામોલીન તેલ (૧૫ કિલો ડબ્બો)', rate: '1730', active: true }
+      { id: 'p1', eng: 'Groundnut Oil (Sing Tel 15kg)', guj: 'સીંગતેલ (૧૫ કિલો ડબ્બો)', rate: '', active: false },
+      { id: 'p2', eng: 'Cottonseed Oil (Kapasiya 15kg)', guj: 'કપાસિયા તેલ (૧૫ કિલો ડબ્બો)', rate: '', active: false },
+      { id: 'p3', eng: 'Mustard Oil (Sarson 15kg)', guj: 'સરસવ તેલ (૧૫ કિલો ડબ્બો)', rate: '', active: false },
+      { id: 'p4', eng: 'Sunflower Oil (15L Tin)', guj: 'સૂર્યમુખી તેલ (૧૫ લીટર)', rate: '', active: false },
+      { id: 'p5', eng: 'Soybean Oil (15kg Tin)', guj: 'સોયાબીન તેલ (૧૫ કિલો ડબ્બો)', rate: '', active: false },
+      { id: 'p6', eng: 'Palmolein Oil (15kg Tin)', guj: 'પામોલીન તેલ (૧૫ કિલો ડબ્બો)', rate: '', active: false }
+    ];
+
+    const gujaratiMonths = [
+      "જાન્યુઆરી", "ફેબ્રુઆરી", "માર્ચ", "એપ્રિલ", "મે", "જૂન",
+      "જુલાઈ", "ઓગસ્ટ", "સપ્ટેમ્બર", "ઓક્ટોબર", "નવેમ્બર", "ડિસેમ્બર"
+    ];
+
+    const gujaratiDays = [
+      "રવિવાર", "સોમવાર", "મંગળવાર", "બુધવાર", "ગુરુવાર", "શુક્રવાર", "શનિવાર"
     ];
 
     let sessionProducts = JSON.parse(JSON.stringify(defaultProducts));
 
-    function init() {
-      // Set today's date in input
-      const today = new Date();
-      const yyyy = today.getFullYear();
-      const mm = String(today.getMonth() + 1).padStart(2, '0');
-      const dd = String(today.getDate()).padStart(2, '0');
+    function setTodayDate() {
+      const now = new Date();
+      const yyyy = now.getFullYear();
+      const mm = String(now.getMonth() + 1).padStart(2, '0');
+      const dd = String(now.getDate()).padStart(2, '0');
       document.getElementById('rate-date').value = `${yyyy}-${mm}-${dd}`;
+      refreshDateDisplayBadge(now);
+    }
 
+    function refreshDateDisplayBadge(dateObj) {
+      const dayName = gujaratiDays[dateObj.getDay()];
+      const dayNum = dateObj.getDate();
+      const monthName = gujaratiMonths[dateObj.getMonth()];
+      const yearNum = dateObj.getFullYear();
+      document.getElementById('date-gujarati-badge').textContent = `${dayName}, ${dayNum} ${monthName} ${yearNum}`;
+    }
+
+    function onDateChanged() {
+      const val = document.getElementById('rate-date').value;
+      if (val) {
+        const parts = val.split('-');
+        const d = new Date(parts[0], parts[1] - 1, parts[2]);
+        refreshDateDisplayBadge(d);
+      }
+      updateLivePreview();
+    }
+
+    function init() {
+      document.getElementById('firm-name').value = DEFAULT_SHOP_NAME;
+      document.getElementById('direct-phone-input').value = '';
+      setTodayDate();
       renderProducts();
       updateLivePreview();
     }
@@ -252,7 +284,9 @@
       sessionProducts.forEach(item => {
         const row = document.createElement('div');
         row.className = `p-3 rounded-xl border flex items-center justify-between gap-3 transition ${
-          item.active ? 'bg-slate-950/70 border-slate-800' : 'bg-slate-950/20 border-slate-900 opacity-50'
+          item.active 
+            ? 'bg-slate-900 border-amber-500/60 shadow-md ring-1 ring-amber-500/20' 
+            : 'bg-slate-950/40 border-slate-800/80 opacity-60'
         }`;
 
         row.innerHTML = `
@@ -260,8 +294,8 @@
             <input type="checkbox" 
                    ${item.active ? 'checked' : ''} 
                    onchange="toggleActive('${item.id}', this.checked)"
-                   class="w-5 h-5 rounded border-slate-700 bg-slate-900 text-emerald-500 focus:ring-0 accent-emerald-500 cursor-pointer flex-shrink-0">
-            <div class="min-w-0 flex-1">
+                   class="w-5 h-5 rounded border-slate-700 bg-slate-900 text-amber-500 focus:ring-0 accent-amber-500 cursor-pointer flex-shrink-0">
+            <div class="min-w-0 flex-1 cursor-pointer" onclick="toggleRowCheckbox('${item.id}')">
               <div class="font-bold text-xs text-white truncate">${escapeHTML(item.eng)}</div>
               <div class="font-gujarati text-[11px] text-slate-400 truncate">${escapeHTML(item.guj)}</div>
             </div>
@@ -271,10 +305,11 @@
             <div class="relative w-24">
               <span class="absolute left-2.5 top-2 text-xs font-bold text-slate-500">₹</span>
               <input type="number" 
+                     id="rate-input-${item.id}"
                      value="${item.rate}" 
                      placeholder="Rate"
                      oninput="updateRate('${item.id}', this.value)"
-                     class="w-full pl-6 pr-2.5 py-1.5 text-right font-bold text-sm font-num bg-slate-900 border border-slate-700 rounded-lg text-amber-300 focus:outline-none focus:border-amber-400">
+                     class="w-full pl-6 pr-2 py-1.5 text-right font-bold text-sm font-num bg-slate-950 border border-slate-700 rounded-lg text-amber-300 placeholder-slate-600 focus:outline-none focus:border-amber-400">
             </div>
 
             <button onclick="deleteProduct('${item.id}')" title="Remove" class="text-slate-600 hover:text-rose-400 p-1 transition">
@@ -286,12 +321,25 @@
       });
     }
 
+    function toggleRowCheckbox(id) {
+      const p = sessionProducts.find(x => x.id === id);
+      if (p) {
+        toggleActive(id, !p.active);
+      }
+    }
+
     function toggleActive(id, state) {
       const p = sessionProducts.find(x => x.id === id);
       if (p) {
         p.active = state;
         renderProducts();
         updateLivePreview();
+        if (state) {
+          setTimeout(() => {
+            const input = document.getElementById(`rate-input-${id}`);
+            if (input) input.focus();
+          }, 50);
+        }
       }
     }
 
@@ -299,6 +347,7 @@
       const p = sessionProducts.find(x => x.id === id);
       if (p) {
         p.rate = val;
+        // Auto-check if price was typed
         if (val && !p.active) {
           p.active = true;
           renderProducts();
@@ -314,35 +363,52 @@
       showToast('Item removed');
     }
 
-    function resetDefaults() {
-      sessionProducts = JSON.parse(JSON.stringify(defaultProducts));
+    // Reset button functionality
+    function resetToLaxmiDepoDefaults() {
+      document.getElementById('firm-name').value = DEFAULT_SHOP_NAME;
+      document.getElementById('direct-phone-input').value = '';
+      setTodayDate();
+
+      // Reset all items: deselected and rate blank
+      sessionProducts = defaultProducts.map(p => ({
+        ...p,
+        rate: '',
+        active: false
+      }));
+
       renderProducts();
       updateLivePreview();
-      showToast('Reset to default items');
+      showToast('Reset to Laxmi Oil Depo');
     }
 
-    // Gujarati formatted message composer
+    // Gujarati formatted message generator
     function buildGujaratiMessage() {
-      const firm = document.getElementById('firm-name').value.trim() || 'આજના બજાર ભાવ';
-      const city = document.getElementById('firm-city').value.trim();
+      const firm = document.getElementById('firm-name').value.trim() || DEFAULT_SHOP_NAME;
       const rawDate = document.getElementById('rate-date').value;
       
-      let dateStr = '';
+      let formattedGujDate = '';
       if (rawDate) {
         const parts = rawDate.split('-');
-        dateStr = `${parts[2]}/${parts[1]}/${parts[0]}`;
+        const dateObj = new Date(parts[0], parts[1] - 1, parts[2]);
+        const dayName = gujaratiDays[dateObj.getDay()];
+        const dayNum = dateObj.getDate();
+        const monthName = gujaratiMonths[dateObj.getMonth()];
+        const yearNum = dateObj.getFullYear();
+        formattedGujDate = `${dayName}, ${dayNum} ${monthName} ${yearNum} (${parts[2]}/${parts[1]}/${parts[0]})`;
       }
 
       let lines = [];
       lines.push(`🙏 *જય શ્રી કૃષ્ણ / શુભ સવાર* 🙏`);
-      lines.push(`🏪 *${firm.toUpperCase()}*` + (city ? ` (${city})` : ''));
-      if (dateStr) lines.push(`📅 *તારીખ:* ${dateStr}`);
+      lines.push(`🏪 *${firm.toUpperCase()}*`);
+      if (formattedGujDate) {
+        lines.push(`📅 *તારીખ:* ${formattedGujDate}`);
+      }
       lines.push(`━━━━━━━━━━━━━━━━━━━━━`);
       lines.push(`📦 *આજના તેલના તાજા ભાવ:*`);
       lines.push(``);
 
       let activeCount = 0;
-      sessionProducts.forEach((p, idx) => {
+      sessionProducts.forEach((p) => {
         if (p.active && p.rate) {
           activeCount++;
           const numPrice = Number(p.rate).toLocaleString('en-IN');
@@ -368,11 +434,10 @@
       document.getElementById('gujarati-whatsapp-preview').textContent = buildGujaratiMessage();
     }
 
-    // Direct WhatsApp share
+    // General WhatsApp broadcast
     async function shareWhatsAppGeneral() {
       const text = buildGujaratiMessage();
 
-      // Native mobile share sheet fallback (lets user pick WhatsApp directly)
       if (navigator.share) {
         try {
           await navigator.share({ title: 'Daily Oil Rates', text: text });
@@ -380,7 +445,6 @@
         } catch (e) {}
       }
 
-      // Universal WhatsApp protocol
       const encoded = encodeURIComponent(text);
       window.location.href = `https://api.whatsapp.com/send?text=${encoded}`;
     }
@@ -400,7 +464,7 @@
       window.location.href = `https://api.whatsapp.com/send?phone=${fullNumber}&text=${text}`;
     }
 
-    // Safe clipboard copy
+    // Copy to clipboard
     function copyGeneratedMessage() {
       const text = buildGujaratiMessage();
       const ta = document.createElement('textarea');
@@ -418,7 +482,7 @@
       document.body.removeChild(ta);
     }
 
-    // Add item modal logic
+    // Add extra custom product modal
     function openAddItemModal() {
       document.getElementById('new-item-eng').value = '';
       document.getElementById('new-item-guj').value = '';
@@ -444,8 +508,8 @@
         id: 'item_' + Date.now(),
         eng: eng,
         guj: guj,
-        rate: rate || '0',
-        active: true
+        rate: rate || '',
+        active: rate ? true : false
       });
 
       renderProducts();
